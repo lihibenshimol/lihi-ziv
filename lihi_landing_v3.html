@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ליהי זיו | עיצוב תודעה וארכיטקטורה קוונטית</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --white: #fdfcfa;
+  --black: #0e0f11;
+  --mid: #2d3140;
+  --muted: #7a8294;
+  --line: rgba(0,0,0,0.08);
+
+  --violet: #7c6af5;
+  --violet-light: #a89ef8;
+  --teal: #4bbfb0;
+  --teal-light: #7dd9ce;
+  --rose: #e8697a;
+  --rose-light: #f0929f;
+  --amber: #e8a84c;
+  --amber-light: #f2c47a;
+
+  --grad-1: linear-gradient(135deg, var(--violet), var(--teal));
+  --grad-2: linear-gradient(135deg, var(--rose), var(--amber));
+  --grad-3: linear-gradient(135deg, var(--teal), var(--violet-light));
+  --grad-4: linear-gradient(135deg, var(--amber), var(--rose));
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════
+   BANDS — full-width sections
+   ════════════════════════════ */
+
+.band { width: 100%; }
+
+/* 1. HERO — beige with a soft violet glow from above */
+.band-hero {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(124,106,245,0.09) 0%, transparent 60%),
+    var(--bg);
+}
+
+/* 2. BEIGE — plain base */
+.band-default { background: var(--bg); }
+
+/* 3. WHITE — elevated paper, floats above the beige */
+.band-white {
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  box-shadow:
+    0 12px 48px rgba(0,0,0,0.05),
+    0 -4px 20px rgba(0,0,0,0.03);
+}
+
+/* 4. VIOLET TINT — subtle hue shift for social proof */
+.band-tinted {
+  background: rgba(124,106,245,0.05);
+  border-top: 1.5px solid rgba(124,106,245,0.13);
+  border-bottom: 1.5px solid rgba(124,106,245,0.13);
+  overflow: hidden;
+}
+
+/* 5. DARK — dramatic CTA block */
+.band-dark {
+  background: linear-gradient(160deg, #13103a 0%, #0e0f11 48%, #071a17 100%);
+  position: relative;
+}
+.band-dark::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--teal), var(--rose), var(--amber));
+}
+
+/* inner padding for each band */
+.band-inner { padding: 60px 0; }
+.band-hero .container { padding-top: 0; }
+
+/* ── HEADER ── */
+header {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+
+.infinity-wrap {
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.infinity {
+  font-size: 52px;
+  background: var(--grad-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  animation: pulse-inf 4s ease-in-out infinite;
+  line-height: 1;
+}
+
+@keyframes pulse-inf {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.name {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: clamp(44px, 7vw, 64px);
+  letter-spacing: 0.04em;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.hero-tagline {
+  font-weight: 800;
+  font-size: clamp(20px, 3.2vw, 28px);
+  color: var(--black);
+  margin-bottom: 14px;
+  line-height: 1.35;
+}
+
+.hero-sub {
+  font-weight: 300;
+  font-size: 15.5px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 460px;
+  margin: 0 auto 10px;
+}
+
+.title-tag {
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 28px;
+  display: block;
+}
+
+.hero-cta { margin-top: 28px; }
+
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 44px;
+  background: var(--grad-1);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 28px rgba(124,106,245,0.3);
+}
+.btn-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px rgba(124,106,245,0.4);
+}
+
+/* ── DIVIDERS (within-band only) ── */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0;
+}
+.rule::before, .rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.rule-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--violet-light);
+  opacity: 0.5;
+}
+
+.rule-sm {
+  width: 32px;
+  height: 1px;
+  background: var(--line);
+  margin: 36px auto;
+}
+
+/* ── LABELS ── */
+.label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  margin-bottom: 32px;
+}
+
+/* ── FOR YOU ── */
+.for-you-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* items use beige bg so they sit visibly on the white band */
+.for-you-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 18px 24px;
+  transition: all 0.3s ease;
+}
+.for-you-item:hover {
+  background: var(--white);
+  border-color: rgba(124,106,245,0.25);
+  box-shadow: 0 4px 20px rgba(124,106,245,0.07);
+  transform: translateX(-2px);
+}
+
+.check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--grad-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.for-you-text {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.6;
+  font-weight: 400;
+}
+.for-you-text strong {
+  font-weight: 700;
+  color: var(--black);
+}
+
+/* ── ABOUT ── */
+.hi {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--violet);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.about-text {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--mid);
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+.about-text strong { font-weight: 700; color: var(--black); }
+
+/* ── PILLS ── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.pill {
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  padding: 7px 18px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+.pill-v { background: rgba(124,106,245,0.1); color: var(--violet); }
+.pill-t { background: rgba(75,191,176,0.1); color: var(--teal); }
+.pill-r { background: rgba(232,105,122,0.1); color: var(--rose); }
+.pill-a { background: rgba(232,168,76,0.1); color: var(--amber); }
+
+/* ── SERVICES ── */
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.service {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 28px 32px;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.service::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 3px;
+  height: 100%;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.service-1::before { background: var(--grad-1); }
+.service-2::before { background: var(--grad-2); }
+.service-3::before { background: var(--grad-3); }
+.service-4::before { background: var(--grad-4); }
+
+.service:hover::before { opacity: 1; }
+.service:hover {
+  border-color: rgba(0,0,0,0.12);
+  transform: translateX(-3px);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+}
+
+.service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.service-num {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.service-tag {
+  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+}
+.tag-1 { background: rgba(124,106,245,0.1); color: var(--violet); }
+.tag-2 { background: rgba(232,105,122,0.1); color: var(--rose); }
+.tag-3 { background: rgba(75,191,176,0.1); color: var(--teal); }
+.tag-4 { background: rgba(232,168,76,0.1); color: var(--amber); }
+
+.service-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.service-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.service-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.service:hover .service-cta { opacity: 1; }
+.cta-1 { color: var(--violet); }
+.cta-2 { color: var(--rose); }
+.cta-3 { color: var(--teal); }
+.cta-4 { color: var(--amber); }
+
+/* ── MID BUTTONS ── */
+.mid-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-mid {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.btn-mid-v { background: rgba(124,106,245,0.1); color: var(--violet); border: 1px solid rgba(124,106,245,0.2); }
+.btn-mid-v:hover { background: var(--violet); color: white; transform: translateY(-2px); }
+.btn-mid-t { background: rgba(75,191,176,0.1); color: var(--teal); border: 1px solid rgba(75,191,176,0.2); }
+.btn-mid-t:hover { background: var(--teal); color: white; transform: translateY(-2px); }
+.btn-mid-r { background: rgba(232,105,122,0.1); color: var(--rose); border: 1px solid rgba(232,105,122,0.2); }
+.btn-mid-r:hover { background: var(--rose); color: white; transform: translateY(-2px); }
+.btn-mid-a { background: rgba(232,168,76,0.1); color: var(--amber); border: 1px solid rgba(232,168,76,0.2); }
+.btn-mid-a:hover { background: var(--amber); color: white; transform: translateY(-2px); }
+
+/* ── PROCESS ── */
+.process-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 0;
+}
+.process-step:not(:last-child) { border-bottom: 1px solid var(--line); }
+
+/* step circles: beige bg so they contrast against the white band */
+.step-num {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid rgba(124,106,245,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--violet);
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--black);
+  margin-bottom: 5px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.step-note {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  background: rgba(75,191,176,0.1);
+  padding: 3px 12px;
+  border-radius: 100px;
+}
+
+/* ── CARD DECK (TESTIMONIALS) ── */
+.deck-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.card-deck {
+  position: relative;
+  width: min(280px, 100%);
+  min-height: 180px; /* fallback before images load */
+  cursor: pointer;
+}
+
+.deck-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 5px 5px 18px;
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.14),
+    0 1px 6px rgba(0,0,0,0.07);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.deck-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* stack depth via data-pos */
+.deck-card[data-pos="0"] { transform: rotate(0deg)     translate(0,0);        z-index: 8; }
+.deck-card[data-pos="1"] { transform: rotate(-2deg)    translate(-3px, 7px);  z-index: 7; }
+.deck-card[data-pos="2"] { transform: rotate(1.5deg)   translate(3px, 12px);  z-index: 6; }
+.deck-card[data-pos="3"] { transform: rotate(-1deg)    translate(-2px, 16px); z-index: 5; }
+.deck-card[data-pos="4"] { transform: rotate(1deg)     translate(2px, 18px);  z-index: 4; }
+.deck-card[data-pos="5"] { transform: rotate(-0.5deg)  translate(0, 20px);    z-index: 3; }
+.deck-card[data-pos="6"] { transform: rotate(0.5deg)   translate(0, 21px);    z-index: 2; }
+.deck-card[data-pos="7"] { transform: rotate(0deg)     translate(0, 22px);    z-index: 1; }
+
+/* fly-off: top card exits to the left */
+.deck-card.deck-out {
+  transform: translateX(-130%) rotate(-14deg) !important;
+  opacity: 0;
+  transition: transform 0.38s ease, opacity 0.3s ease !important;
+  z-index: 9 !important;
+}
+
+.deck-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.deck-counter {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--black);
+  letter-spacing: 0.08em;
+  min-width: 36px;
+  text-align: center;
+}
+
+.deck-hint {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* ── STORY ── */
+.story-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 52px 44px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.05);
+}
+.story-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--teal), var(--rose), var(--amber));
+}
+
+.story-text {
+  font-size: clamp(15px, 2.2vw, 16.5px);
+  font-weight: 400;
+  line-height: 2.05;
+  color: var(--mid);
+  text-align: center;
+}
+.story-text strong { font-weight: 700; color: var(--black); }
+.story-text .highlight {
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--violet), var(--teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── CTA (dark band) ── */
+.cta-section {
+  padding: 64px 0 60px;
+  text-align: center;
+}
+
+.cta-headline {
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.cta-sub {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 16px;
+}
+
+.cta-urgency {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rose-light);
+  background: rgba(232,105,122,0.15);
+  padding: 6px 18px;
+  border-radius: 100px;
+  margin-bottom: 40px;
+  letter-spacing: 0.06em;
+  border: 1px solid rgba(232,105,122,0.25);
+}
+
+.main-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 280px;
+  padding: 17px 44px;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.btn-wa {
+  background: var(--grad-1);
+  color: white;
+}
+.btn-wa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(124,106,245,0.35);
+}
+
+.btn-ig {
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.btn-ig:hover {
+  border-color: var(--rose);
+  color: var(--rose-light);
+  transform: translateY(-1px);
+}
+
+.btn-site {
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.btn-site:hover {
+  border-color: var(--violet-light);
+  color: var(--violet-light);
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 44px 0 88px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.footer-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.footer-copy {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: rgba(122,130,148,0.5);
+  font-weight: 400;
+}
+
+/* ── FLOATING WHATSAPP ── */
+.float-wa {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background: var(--grad-1);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 32px rgba(124,106,245,0.4);
+  z-index: 500;
+  transition: all 0.3s ease;
+}
+.float-wa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(124,106,245,0.55);
+}
+
+/* ── FADE ── */
+.fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade.in { opacity: 1; transform: translateY(0); }
+
+/* ── TRANSFORMATION (מ...ל...) ── */
+.transform-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.transform-row {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.transform-row:last-child { border-bottom: none; }
+
+.tf-from {
+  text-align: right;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.tf-arr {
+  text-align: center;
+  color: var(--violet-light);
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+.tf-to {
+  text-align: left;
+  font-size: 14px;
+  color: var(--black);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* money row: gradient on the outcome text */
+.tf-money .tf-to {
+  background: linear-gradient(135deg, var(--amber), var(--rose));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 500px) {
+  .container { padding: 0 20px; }
+  .band-inner { padding: 44px 0; }
+  .story-card { padding: 36px 24px; }
+  .mid-btns { gap: 8px; }
+  .btn-mid { padding: 10px 16px; font-size: 12px; }
+  .float-wa .float-label { display: none; }
+  .float-wa { padding: 14px 18px; }
+  .btn-main { min-width: 0; width: 100%; }
+
+  /* deck — full width on small screens */
+  .card-deck { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ BAND 1: HERO — beige + subtle violet glow ══ -->
+<div class="band band-hero">
+  <div class="container">
+    <header class="fade">
+      <div class="infinity-wrap">
+        <span class="infinity">∞</span>
+      </div>
+      <h1 class="name">Lihi Ziv</h1>
+      <p class="hero-tagline">לא עוד ריפוי —<br>עדכון מהיסוד.</p>
+      <p class="hero-sub">כשהזהות מתעדכנת, הכסף, הקשרים וההזדמנויות מתיישרים בעקבותיה.</p>
+      <span class="title-tag">Mind Design & Quantum Architecture</span>
+      <div class="hero-cta">
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-hero" target="_blank">קבעי שיחת היכרות חינמית ←</a>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- ══ BAND 2: FOR YOU — white, elevated ══ -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">זה עבורך אם...</span>
+      <div class="for-you-list">
+        <div class="for-you-item">
+          <div class="check">✓</div>
+          <p class="for-you-text">את מרגישה שאת <strong>חוזרת על אותם דפוסים רגשיים שוב ושוב</strong> - ולא מבינה למה</p>
+        </div>
+        <div class="for-you-item">
+          <div class="check">✓</div>
+          <p class="for-you-text">יש לך תחושה שמשהו גדול מחכה לך - אבל <strong>מחסום בלתי נראה</strong> מונע ממך להגיע אליו</p>
+        </div>
+        <div class="for-you-item">
+          <div class="check">✓</div>
+          <p class="for-you-text">עברת <strong>שבר, אובדן או קריסה</strong> — ועדיין נושאת אותו בגוף ובחיים שלך</p>
+        </div>
+        <div class="for-you-item">
+          <div class="check">✓</div>
+          <p class="for-you-text">ריפוי שטחי כבר לא מספיק לך. את רוצה <strong>שינוי אמיתי מהיסוד</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 3: ABOUT — beige ══ -->
+<div class="band band-default">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">היי, נעים להכיר</span>
+      <p class="hi">אני ליהי זיו —</p>
+      <p class="about-text">
+        <strong>מומחית לעיצוב תודעה וטיפול בזיכרון תאי</strong>, עם רקע בפסיכותרפיה הוליסטית, נומרולוגיה, נוירופלסטיקה ועבודת אנרגיה.
+      </p>
+      <p class="about-text">
+        מלווה נשים בפריצות דרך קוונטיות ושינוי זהות עמוק — לא דרך עוד ריפוי, אלא דרך <strong>עדכון מהיסוד של מערכת ההפעלה התודעתית שלך.</strong>
+      </p>
+      <div class="pills">
+        <span class="pill pill-v">עיצוב תודעה</span>
+        <span class="pill pill-t">זיכרון תאי</span>
+        <span class="pill pill-r">נוירופלסטיקה</span>
+        <span class="pill pill-a">נומרולוגיה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 4: STORY — beige ══ -->
+<div class="band band-default">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">הסיפור שלי</span>
+      <div class="story-card">
+        <p class="story-text">
+          ב-2019 איבדתי את אחי הגדול, <strong>ליעד</strong>, בתאונה.
+          <br><br>
+          העולם שלי נהרס ברגע אחד. לא היה לי שם לכאב, לא היה לי כיוון, לא היה לי "אחרי זה".
+          <br><br>
+          אבל תמיד הייתי סקרנית — ולא הסכמתי לקבל את השבר הזה כסוף הסיפור.
+          <br><br>
+          התחלתי לחקור. את עצמי, את הנשמה, את האנרגיה, את כל מה שמתחת לפני השטח. עברתי גלגולים שלמים — כלכלית, אישית, רוחנית. ראיתי מינוס. איבדתי עסק. הרגשתי שאני מאפסת הכל מחדש.
+          <br><br>
+          ומתוך כל זה הבנתי משהו שאי אפשר ללמד בספר:
+          <br>
+          <span class="highlight">השבר הוא לא המקום שבו הכל נגמר. הוא המקום שבו את מתחילה להיזכר במי שאת באמת.</span>
+          <br><br>
+          היום אני עושה את זה עם נשים אחרות. לא כי זה יפה — כי זה אמיתי.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 5: TRANSFORMATION — white ══ -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מה משתנה</span>
+      <p class="hi" style="font-size: clamp(18px,2.5vw,22px); margin-bottom: 36px;">כשהזהות מתעדכנת מהיסוד</p>
+      <div class="transform-grid">
+        <div class="transform-row">
+          <p class="tf-from">תקועה בדפוסים שחוזרים על עצמם</p>
+          <span class="tf-arr">←</span>
+          <p class="tf-to">זהות חדשה שמושכת מציאות אחרת</p>
+        </div>
+        <div class="transform-row">
+          <p class="tf-from">ריפוי על ריפוי — ללא שינוי אמיתי</p>
+          <span class="tf-arr">←</span>
+          <p class="tf-to">שינוי עמוק שנשאר בגוף ובחיים</p>
+        </div>
+        <div class="transform-row tf-money">
+          <p class="tf-from">כסף שרוקד במקום, הכנסה לא יציבה</p>
+          <span class="tf-arr">←</span>
+          <p class="tf-to">שפע שזורם מזהות של ערך וחיבור</p>
+        </div>
+        <div class="transform-row">
+          <p class="tf-from">עייפות, חוסר כיוון, ״בשביל מה״</p>
+          <span class="tf-arr">←</span>
+          <p class="tf-to">בהירות, עוצמה ותנועה קדימה</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 6: SERVICES — beige ══ -->
+<div class="band band-default">
+  <div class="container">
+    <div class="fade" style="padding: 60px 0;">
+      <span class="label">איך אפשר לעבוד איתי?</span>
+      <div class="services">
+
+        <a href="https://from-zero-to-infinite.onrender.com/" class="service service-1" target="_blank">
+          <div class="service-top">
+            <span class="service-num">01</span>
+            <span class="service-tag tag-1">פרימיום</span>
+          </div>
+          <span class="service-name">From Zero to Infinite</span>
+          <p class="service-desc">ליווי לקפיצה קוונטית ושינוי זהות עמוק. 4 מפגשי עומק אסטרטגיים, מפת מערכת הפעלה אישית וליווי צמוד לאורך כל התהליך.</p>
+          <span class="service-cta cta-1">למידע נוסף ←</span>
+        </a>
+
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="service service-2" target="_blank">
+          <div class="service-top">
+            <span class="service-num">02</span>
+            <span class="service-tag tag-2">אישי</span>
+          </div>
+          <span class="service-name">מפגשים אישיים</span>
+          <p class="service-desc">טיפול רגשי ואימון מנטלי ממוקד. ישירות לשורש, בלי לעשות מסביב.</p>
+          <span class="service-cta cta-2">לקביעת מפגש ←</span>
+        </a>
+
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="service service-3" target="_blank">
+          <div class="service-top">
+            <span class="service-num">03</span>
+            <span class="service-tag tag-3">אנרגיה</span>
+          </div>
+          <span class="service-name">טיפולי רייקי</span>
+          <p class="service-desc">עבודת אנרגיה עמוקה לאיזון, ניקוי וחידוש. ריפוי שחותך ישר למקום שמילים לא תמיד מגיעות אליו.</p>
+          <span class="service-cta cta-3">לקביעת טיפול ←</span>
+        </a>
+
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="service service-4" target="_blank">
+          <div class="service-top">
+            <span class="service-num">04</span>
+            <span class="service-tag tag-4">קלפים</span>
+          </div>
+          <span class="service-name">From Zero to Infinite — Card Deck</span>
+          <p class="service-desc">63 קלפי מסר שנכתבו כדי לשבש את הלופ שהמיינד שלך תקוע בו. לא עצות. לא אפירמציות. תדר.</p>
+          <span class="service-cta cta-4">להזמנה ←</span>
+        </a>
+
+      </div>
+
+      <div class="rule-sm fade"></div>
+      <div class="mid-btns fade">
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-mid btn-mid-v" target="_blank">💬 וואטסאפ</a>
+        <a href="https://www.instagram.com/lihiziv.mindbody/" class="btn-mid btn-mid-r" target="_blank">✦ אינסטגרם</a>
+        <a href="https://from-zero-to-infinite.onrender.com/" class="btn-mid btn-mid-t" target="_blank">∞ ליווי פרימיום</a>
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-mid btn-mid-a" target="_blank">🃏 קלפי מסר</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 7: PROCESS — white ══ -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">איך מתחילים?</span>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div>
+            <p class="step-title">שיחת היכרות חינמית</p>
+            <p class="step-desc">20 דקות בזום או בטלפון — מבינות ביחד מה נכון לך ואיפה כדאי להתחיל.</p>
+            <span class="step-note">ללא עלות · ללא התחייבות</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-title">מיפוי מערכת ההפעלה שלך</p>
+            <p class="step-desc">ביחד מוצאות את השורש — מה באמת מחזיק אותך במקום שאת לא רוצה להיות בו.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-title">טיפול, שינוי ועדכון מהיסוד</p>
+            <p class="step-desc">עבודת עומק שמייצרת שינוי שנשאר — לא דרך לימוד, אלא בחוויה ישירה.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 8: SOCIAL PROOF — violet tinted ══ -->
+<div class="band band-tinted">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מה אומרות הנשים שעבדו איתי</span>
+      <div class="deck-wrap">
+        <div class="card-deck" id="cardDeck">
+          <div class="deck-card"><img src="assests/screenshots/IMG_7715.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_0447.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_2529.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_6951.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_1845.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_6859.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_9470.jpg" alt="משוב מלקוחה"></div>
+          <div class="deck-card"><img src="assests/screenshots/IMG_3772.jpg" alt="משוב מלקוחה"></div>
+        </div>
+        <div class="deck-footer">
+          <span class="deck-hint">לחצי להמשך</span>
+          <span class="deck-counter" id="deckCounter">1 / 8</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BAND 9: CTA — dark gradient ══ -->
+<div class="band band-dark">
+  <div class="container">
+    <section class="cta-section fade">
+      <h2 class="cta-headline">מוכנה להתחיל?</h2>
+      <p class="cta-sub">שיחת היכרות ראשונה - חינמית וללא התחייבות</p>
+      <span class="cta-urgency">⟡ מקומות מוגבלים לחודש הקרוב</span>
+      <div class="main-btns">
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-main btn-wa" target="_blank">
+          💬 &nbsp; קבעי שיחת היכרות חינמית
+        </a>
+        <a href="https://www.instagram.com/lihiziv.mindbody/" class="btn-main btn-ig" target="_blank">
+          עקבי אחרי באינסטגרם
+        </a>
+        <a href="https://from-zero-to-infinite.onrender.com/" class="btn-main btn-site" target="_blank">
+          ליווי הפרימיום - From Zero to Infinite
+        </a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══ BAND 8: FOOTER — beige ══ -->
+<div class="band band-default">
+  <div class="container">
+    <footer class="fade">
+      <p class="footer-name">Lihi Ziv</p>
+      <p class="footer-copy">MIND DESIGN & QUANTUM ARCHITECTURE © 2025</p>
+    </footer>
+  </div>
+</div>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/message/VIHIGNG2RHHWK1" class="float-wa" target="_blank">
+  <span>💬</span>
+  <span class="float-label">קבעי עכשיו</span>
+</a>
+
+<script>
+  // scroll fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+  // card deck
+  (function () {
+    const deck = document.getElementById('cardDeck');
+    if (!deck) return;
+    const cards = [...deck.querySelectorAll('.deck-card')];
+    const counter = document.getElementById('deckCounter');
+    const total = cards.length;
+    let current = 0, busy = false;
+
+    function setPos() {
+      cards.forEach((c, i) => c.setAttribute('data-pos', (i - current + total) % total));
+      if (counter) counter.textContent = (current + 1) + ' / ' + total;
+    }
+
+    function resize() {
+      const top = deck.querySelector('[data-pos="0"]');
+      if (top && top.offsetHeight > 0) deck.style.height = (top.offsetHeight + 24) + 'px';
+    }
+
+    function next() {
+      if (busy) return;
+      busy = true;
+      const top = deck.querySelector('[data-pos="0"]');
+      if (!top) { busy = false; return; }
+      top.classList.add('deck-out');
+      setTimeout(() => {
+        top.classList.remove('deck-out');
+        current = (current + 1) % total;
+        setPos();
+        requestAnimationFrame(resize);
+        busy = false;
+      }, 420);
+    }
+
+    deck.addEventListener('click', next);
+
+    let sx = 0;
+    deck.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    deck.addEventListener('touchend', e => {
+      if (sx - e.changedTouches[0].clientX > 40) next();
+    }, { passive: true });
+
+    setPos();
+    deck.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', resize);
+      if (img.complete) resize();
+    });
+    window.addEventListener('resize', resize);
+  })();
+</script>
+</body>
+</html>
