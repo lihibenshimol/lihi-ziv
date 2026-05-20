@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מפגשים אישיים | ליהי זיו</title>
+<link rel="icon" type="image/png" href="assests/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --white: #fdfcfa;
+  --black: #0e0f11;
+  --mid: #2d3140;
+  --muted: #7a8294;
+  --line: rgba(0,0,0,0.08);
+  --violet: #7c6af5;
+  --violet-light: #a89ef8;
+  --teal: #4bbfb0;
+  --rose: #e8697a;
+  --amber: #e8a84c;
+  --grad-1: linear-gradient(135deg, var(--violet), var(--teal));
+  --grad-2: linear-gradient(135deg, var(--rose), var(--amber));
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── BANDS ── */
+.band { width: 100%; }
+.band-default { background: var(--bg); }
+.band-white {
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.04), 0 -2px 16px rgba(0,0,0,0.02);
+}
+.band-dark {
+  background: linear-gradient(160deg, #13103a 0%, #0e0f11 48%, #071a17 100%);
+  position: relative;
+}
+.band-dark::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--teal), var(--rose), var(--amber));
+}
+.band-inner { padding: 60px 0; }
+
+/* ── NAV ── */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: 18px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-decoration: none;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-back:hover { color: var(--violet); }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  padding: 48px 0 56px;
+  text-align: center;
+}
+
+.page-tag {
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: 0.03em;
+  color: var(--black);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.page-subtitle {
+  font-size: clamp(17px, 2.2vw, 20px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── LABEL ── */
+.label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  margin-bottom: 32px;
+}
+
+/* ── PHILOSOPHY TEXT ── */
+.philosophy {
+  text-align: center;
+}
+
+.philosophy-lead {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--mid);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.philosophy-body {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 2;
+  margin-bottom: 20px;
+}
+
+.philosophy-body strong { font-weight: 700; color: var(--black); }
+
+.philosophy-highlight {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.7;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 32px 0 0;
+}
+
+/* ── THREE DIMENSIONS ── */
+.dimensions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.dim-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 24px 16px;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dim-card:hover {
+  border-color: rgba(124,106,245,0.25);
+  box-shadow: 0 4px 20px rgba(124,106,245,0.07);
+}
+
+.dim-icon {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.dim-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--black);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.dim-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ── SESSION DESCRIPTION ── */
+.session-body {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 2;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.session-body strong { font-weight: 700; color: var(--black); }
+
+.session-quote {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--black);
+  text-align: center;
+  line-height: 1.6;
+  background: linear-gradient(135deg, var(--violet), var(--teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 28px 0;
+  display: block;
+}
+
+/* ── LOCATION CARDS ── */
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.location-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.location-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.location-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--black);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.location-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ── FREQUENCY BAR ── */
+.freq-bar {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-right: 3px solid var(--violet);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.freq-icon { font-size: 20px; flex-shrink: 0; }
+
+.freq-text {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.freq-text strong { font-weight: 700; color: var(--black); }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.cta-headline {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+
+.cta-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 44px;
+  background: var(--grad-1);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 4px;
+  min-width: 260px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 28px rgba(124,106,245,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(124,106,245,0.4);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  min-width: 260px;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 36px 0 60px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.footer-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.footer-copy {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(122,130,148,0.4);
+}
+
+/* ── FADE ── */
+.fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade.in { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 500px) {
+  .container { padding: 0 20px; }
+  .top-nav { padding: 16px 20px; }
+  .band-inner { padding: 44px 0; }
+  .dimensions { grid-template-columns: 1fr; gap: 8px; }
+  .location-grid { grid-template-columns: 1fr; }
+  .btn-primary, .btn-secondary { min-width: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="band band-default">
+  <div class="top-nav">
+    <a href="index.html" class="nav-logo">Lihi Ziv</a>
+    <a href="index.html" class="nav-back">→ חזרה לעמוד הראשי</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="band band-default">
+  <div class="container">
+    <div class="page-hero fade">
+      <span class="page-tag">טיפול אישי</span>
+      <h1 class="page-title">מפגשים אישיים</h1>
+      <p class="page-subtitle">לפעמים צריך מישהו שיסתכל על זה מלמעלה - ויעזור לך לראות את הדרך בבהירות.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">על מה מדברים</span>
+      <div class="philosophy">
+        <p class="philosophy-lead">
+          אנחנו ישות רוחנית שמתגלמת בחוויה פיזית.
+        </p>
+        <p class="philosophy-body">
+          ומהיותנו כאלה, אנחנו פוגשים <strong>אתגרים, קשיים, משברים, מכשולים</strong> - אבל גם <strong>שאיפות, חלומות ורגעים של חסד.</strong><br>
+          בתוך כל אלה אנחנו אמורים להיות הנווטים. המשיטים. האחראים על הכיוון.
+        </p>
+        <p class="philosophy-body">
+          ולפעמים, גם הנווטים הטובים ביותר צריכים מישהו שיסתכל על המפה מזווית אחרת.
+        </p>
+        <p class="philosophy-highlight">
+          לפעמים צריך מישהו שיסתכל על זה מלמעלה - ויעזור לך לראות את הדרך בבהירות.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THREE DIMENSIONS + SESSION DESCRIPTION -->
+<div class="band band-default">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מה קורה בטיפול</span>
+
+      <div class="dimensions">
+        <div class="dim-card">
+          <span class="dim-icon">🧬</span>
+          <span class="dim-title">פיזי</span>
+          <span class="dim-desc">הגוף מחזיק זיכרונות. משחררים.</span>
+        </div>
+        <div class="dim-card">
+          <span class="dim-icon">🫀</span>
+          <span class="dim-title">רגשי</span>
+          <span class="dim-desc">רגשות שלא עובדו. פוגשים אותם.</span>
+        </div>
+        <div class="dim-card">
+          <span class="dim-icon">🧠</span>
+          <span class="dim-title">מנטלי</span>
+          <span class="dim-desc">דפוסי חשיבה ישנים. מחליפים אותם.</span>
+        </div>
+      </div>
+
+      <p class="session-body">
+        הטיפולים משלבים את שלושת המימדים כי אנחנו <strong>אדם שלם</strong> - לא רק מחשבות, לא רק רגשות, לא רק גוף.<br>
+        אנחנו מנתחים סיטואציות, עבר, הווה ועתיד - מתוך <strong>כוונה אחת</strong>: לשרת את מסע החיים כאן ועכשיו.
+      </p>
+
+      <p class="session-body">
+        בטיפולים מקבלים <strong>כלים, מעטפת ותמיכה</strong>.<br>
+        הם קורים בהתאם לצורך - כל שבוע, כל שבועיים - <strong>ללא תחימה בזמן,</strong> כי הנפש תמיד צריכה מענה.
+      </p>
+
+      <span class="session-quote">
+        מגיע לנו לחיות יותר מטוב.<br>
+        מגיע לנו להיות נוכחים בחיים שלנו באמת.
+      </span>
+
+      <p class="session-body">
+        וזה קורה רק מתוך <strong>הסכמה לפגוש את הכל.</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTICAL INFO -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מידע מעשי</span>
+
+      <div class="freq-bar">
+        <span class="freq-icon">📅</span>
+        <p class="freq-text">
+          הטיפולים קורים <strong>בהתאם לצורך</strong> - כל שבוע או כל שבועיים.<br>
+          אין תחימה בזמן. ממשיכים כל עוד יש ערך.
+        </p>
+      </div>
+
+      <div class="location-grid">
+        <div class="location-card">
+          <span class="location-icon">💻</span>
+          <span class="location-title">זום</span>
+          <span class="location-desc">מכל מקום בארץ ובעולם, בנוחות של הבית שלך.</span>
+        </div>
+        <div class="location-card">
+          <span class="location-icon">📍</span>
+          <span class="location-title">קליניקה פרטית</span>
+          <span class="location-desc">תל אביב, גבול גבעתיים - לפגישה פנים אל פנים.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="band band-dark">
+  <div class="container">
+    <section class="cta-section fade">
+      <h2 class="cta-headline">מוכנה להתחיל?</h2>
+      <p class="cta-sub">שיחת התאמה חינמית - 20 דקות, ללא התחייבות</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-primary" target="_blank">
+          💬 קבעי שיחת התאמה חינמית
+        </a>
+        <a href="index.html" class="btn-secondary">
+          → חזרה לעמוד הראשי
+        </a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="band band-default">
+  <div class="container">
+    <footer class="fade">
+      <p class="footer-name">Lihi Ziv</p>
+      <p class="footer-copy">MIND DESIGN & QUANTUM ARCHITECTURE © 2025</p>
+    </footer>
+  </div>
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>טיפולי רייקי | ליהי זיו</title>
+<link rel="icon" type="image/png" href="assests/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --white: #fdfcfa;
+  --black: #0e0f11;
+  --mid: #2d3140;
+  --muted: #7a8294;
+  --line: rgba(0,0,0,0.08);
+  --violet: #7c6af5;
+  --violet-light: #a89ef8;
+  --teal: #4bbfb0;
+  --rose: #e8697a;
+  --amber: #e8a84c;
+  --grad-1: linear-gradient(135deg, var(--violet), var(--teal));
+  --grad-teal: linear-gradient(135deg, var(--teal), var(--violet-light));
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── BANDS ── */
+.band { width: 100%; }
+.band-default { background: var(--bg); }
+.band-white {
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.04), 0 -2px 16px rgba(0,0,0,0.02);
+}
+.band-dark {
+  background: linear-gradient(160deg, #13103a 0%, #0e0f11 48%, #071a17 100%);
+  position: relative;
+}
+.band-dark::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--violet), var(--teal));
+}
+.band-inner { padding: 60px 0; }
+
+/* ── NAV ── */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: 18px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-decoration: none;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-back:hover { color: var(--teal); }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  padding: 48px 0 56px;
+  text-align: center;
+}
+
+.page-tag {
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: 0.03em;
+  color: var(--black);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.page-subtitle {
+  font-size: clamp(17px, 2.2vw, 20px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── LABEL ── */
+.label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  margin-bottom: 32px;
+}
+
+/* ── BODY TEXT ── */
+.body-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 2;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.body-text strong { font-weight: 700; color: var(--black); }
+
+.body-lead {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(17px, 2.4vw, 20px);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--mid);
+  line-height: 1.8;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* ── REIKI WHAT ── */
+.reiki-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-right: 3px solid var(--teal);
+  padding: 28px 28px 28px 24px;
+  margin-bottom: 24px;
+}
+
+.reiki-card-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.reiki-card-text {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.85;
+  font-weight: 400;
+}
+
+/* ── SESSION STRUCTURE ── */
+.session-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.session-structure::before {
+  content: '';
+  position: absolute;
+  right: 28px;
+  top: 44px;
+  bottom: 44px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--teal), var(--violet-light));
+  opacity: 0.3;
+}
+
+.session-half {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px 0;
+  position: relative;
+}
+
+.session-half:first-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.half-num {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  border: 1.5px solid rgba(75,191,176,0.3);
+  background: var(--white);
+}
+
+.half-num-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.half-num-time {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1.2;
+}
+
+.half-content { flex: 1; }
+
+.half-title {
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--black);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.half-desc {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+/* ── ONE-TIME NOTE ── */
+.one-time-bar {
+  background: rgba(75,191,176,0.07);
+  border: 1px solid rgba(75,191,176,0.2);
+  border-radius: 2px;
+  padding: 18px 24px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.one-time-bar p {
+  font-size: 15px;
+  color: var(--mid);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.one-time-bar strong {
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.cta-headline {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+
+.cta-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 44px;
+  background: var(--grad-teal);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 4px;
+  min-width: 260px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 28px rgba(75,191,176,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(75,191,176,0.4);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  min-width: 260px;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 36px 0 60px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.footer-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.footer-copy {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(122,130,148,0.4);
+}
+
+/* ── FADE ── */
+.fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade.in { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 500px) {
+  .container { padding: 0 20px; }
+  .top-nav { padding: 16px 20px; }
+  .band-inner { padding: 44px 0; }
+  .btn-primary, .btn-secondary { min-width: 0; width: 100%; }
+  .session-structure::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="band band-default">
+  <div class="top-nav">
+    <a href="index.html" class="nav-logo">Lihi Ziv</a>
+    <a href="index.html" class="nav-back">→ חזרה לעמוד הראשי</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="band band-default">
+  <div class="container">
+    <div class="page-hero fade">
+      <span class="page-tag">עבודת אנרגיה</span>
+      <h1 class="page-title">טיפולי רייקי</h1>
+      <p class="page-subtitle">ריפוי שמגיע למקומות שמילים לא תמיד מגיעות אליהם.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT IS REIKI -->
+<div class="band band-white">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מהי אנרגיית הרייקי?</span>
+
+      <p class="body-lead">
+        הכל הוא אנרגיה - כולל אנחנו.
+      </p>
+
+      <div class="reiki-card">
+        <span class="reiki-card-title">REI + KI</span>
+        <p class="reiki-card-text">
+          המילה "רייקי" יפנית במקורה - <strong>Rei</strong> פירושה כוח עליון, אוניברסלי. <strong>Ki</strong> פירושה אנרגיית חיים. יחד - אנרגיית חיים אוניברסלית.
+        </p>
+      </div>
+
+      <p class="body-text">
+        לגוף שלנו יש שדה אנרגטי. כשהאנרגיה זורמת בחופשיות - אנחנו בריאים, ברורים, מחוברים. כשהיא נחסמת - בגלל טראומה, דפוסים ישנים, עומס רגשי - מרגישים את זה.
+        <strong>בגוף. בחיים. בתזרים.</strong>
+      </p>
+
+      <p class="body-text">
+        רייקי עובד ישירות עם השדה האנרגטי - משחרר חסמים, מאזן, מחדש. לא כלי מחשבתי. לא שיחה. <strong>חוויה ישירה של הגוף והנפש.</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SESSION STRUCTURE -->
+<div class="band band-default">
+  <div class="container">
+    <div class="band-inner fade">
+      <span class="label">מה קורה בטיפול</span>
+
+      <div class="session-structure">
+
+        <div class="session-half">
+          <div class="half-num">
+            <span class="half-num-label">שעה</span>
+            <span class="half-num-time">01</span>
+          </div>
+          <div class="half-content">
+            <span class="half-title">שיחת מפצחת ומפרקת</span>
+            <p class="half-desc">
+              מדברות. פותחות. מבינות ביחד על מה אנחנו עובדות עכשיו. מה נושאת את גופך, מה תקוע, מה רוצה לזוז. השיחה היא חלק בלתי נפרד מהטיפול - היא מכינה אותך ואת הגוף לקבלה.
+            </p>
+          </div>
+        </div>
+
+        <div class="session-half">
+          <div class="half-num">
+            <span class="half-num-label">שעה</span>
+            <span class="half-num-time">02</span>
+          </div>
+          <div class="half-content">
+            <span class="half-title">רייקי והילינג אנרגטי</span>
+            <p class="half-desc">
+              שכיבה, נשימה, עבודה ישירה עם השדה האנרגטי שלך. ניקוי, איזון, חידוש. חלק מהנשים מרגישות גוף שמשתחרר, חלק בוכות, חלק פשוט נחות עמוק - כל חוויה היא תקפה.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="one-time-bar" style="margin-top: 28px;">
+        <p>
+          המפגש הוא <strong>חד פעמי, ללא התחייבות</strong> ולא כחלק מתהליך.<br>
+          שעתיים. מלאות. עבורך.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="band band-dark">
+  <div class="container">
+    <section class="cta-section fade">
+      <h2 class="cta-headline">מוכנה לקבוע?</h2>
+      <p class="cta-sub">מפגש חד פעמי - ללא התחייבות</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/message/VIHIGNG2RHHWK1" class="btn-primary" target="_blank">
+          💬 קבעי טיפול רייקי
+        </a>
+        <a href="index.html" class="btn-secondary">
+          → חזרה לעמוד הראשי
+        </a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="band band-default">
+  <div class="container">
+    <footer class="fade">
+      <p class="footer-name">Lihi Ziv</p>
+      <p class="footer-copy">MIND DESIGN & QUANTUM ARCHITECTURE © 2025</p>
+    </footer>
+  </div>
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
